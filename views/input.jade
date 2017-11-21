@@ -1,0 +1,26 @@
+html
+    head
+        link(rel="stylesheet" href="/css/input.css")
+    body
+        #controller
+            #main__header HODL
+            #main__slogan Enter Your Investments, you have {{MAX_INVESTMENT}} BTC and up to {{MAX_CURRENCIES}} Currencies
+            table#input__body
+                tr
+                    td
+                    td(style="text-align: right;font-family: Montserrat;font-size: 12px;font-weight: 600;") {{MAX_INVESTMENT - inputs.reduce(function(a,c){return a+(+c.amount)},0)}} BTC
+                tr(v-for="inp in inputs")
+                    td
+                        .main__label Ticker:
+                        input.main__input(v-model="inp.ticker")
+                    td
+                        .main__label Proportion: 
+                        input.main__input(v-model="inp.amount")
+                tr
+                    td(colspan="2")
+                        #add__button(@click="newInp()") +
+                tr
+                    td(colspan="2")
+                        button#submit SUBMIT
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.7/vue.min.js")
+        script(src="/js/input.js")
