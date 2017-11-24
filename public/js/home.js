@@ -22,10 +22,10 @@ function Start (data) {
     data.people.forEach((person) => {
         sets.push({
             label: person.name,
-            data: person.amounts.reverse(),
+            data: person.amounts.reverse().map(a => a.toFixed(3)),
             fill: false,
             borderColor: '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6),
-            lineTension: 0.1
+            lineTension: 0.0
         })
     })
 
@@ -36,7 +36,9 @@ function Start (data) {
             "labels": dates,
             "datasets": sets
         },
-        "options":{}
+        "options":{
+            bezierCurve: true
+        }
     })
 }
 

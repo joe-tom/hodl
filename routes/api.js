@@ -26,8 +26,34 @@ router.get('/ledger', (req, res, next) => {
     })
 })
 
+function (inputs) {
+    for(var i = inputs.length; i--;) {
+        inputs[i]
+    }
+}
+
 router.post('/post', (req, res, next) => {
-    console.log(req.body)
+    var data = req.body || {}
+
+    // Check the prelims
+    if (!data.name) {
+        res.error({error: "NO NAME DEFINIED"})
+        return
+    }
+
+    // Attempt to parse the inputs..
+    try {
+        var inps = JSON.parse(data.inps)
+        var data
+        if (data = _validate(inps)) {
+            
+        } else {
+            res.error({error: "BAD INPUTS"})
+            
+        }
+    } catch (e) {
+        res.error({error: "BAD JSON"})
+    }
 })
 
 module.exports = router;

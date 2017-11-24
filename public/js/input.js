@@ -79,5 +79,12 @@ var inputs = new Vue({
 
 
 function done(token) {
-    console.log(token)
+    var request = new XMLHttpRequest()
+    request.open('POST', '/api/post', true)
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    request.send([
+        "token=", token, "&",
+        "inps=", JSON.stringify(inputs.inputs), "&",
+        "name=", inputs.name
+    ].join(''))
 }

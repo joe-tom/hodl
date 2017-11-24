@@ -20,8 +20,8 @@
       ticker: ETC
       amount: 1
 -
-  name: Blo
+  name: Test
   pairs:
     -
       ticker: BCH
-      amount: 1
+      amount: 6
