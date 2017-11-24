@@ -18,7 +18,9 @@ module.exports = function Tick () {
         }
     }
 
-    console.log(tMap)
+    // This is always 1, no need to recollect.
+    delete tMap.BTC
+
     // Collect the set keys
     global.TICKERS = Object.keys(tMap)
 }

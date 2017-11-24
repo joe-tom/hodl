@@ -10,11 +10,13 @@ const grab = require('./grab')
 module.exports = () => {
     global.TICKERS = []
     global.PRICES = {}
+    global.History = []
     
     global.syncing = false
 
     // Load up the tickers and then historical data
-    tick(sync)
+    tick()
+    sync()
     grab()
 
     // Fetch this every 4 hours.
@@ -27,11 +29,6 @@ module.exports = () => {
         ],
         utc: true
     }, (ot) => {
-        // Quit if we're still syncing history (very uncommon)
-        if (global.syncing) {
-            return ot.done()
-        }
-
         // Grab the latest history, and we're done
         grab()
         ot.done()

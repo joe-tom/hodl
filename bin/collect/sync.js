@@ -1,5 +1,8 @@
 
+const request = require('request')
+const async = require('async')
 const yaml = require('yamljs') 
+const fs = require('fs')
 const _ = require('lodash')
 
 const API_URL = 'https://min-api.cryptocompare.com/data/pricehistorical'
@@ -9,12 +12,13 @@ const MAX_TICKERS = 6 // It's actually 7, but this is just to be safe.
 
 /** This syncs the past 30 days worth of information **/
 module.exports = function Sync () {
-    // Report and 
+    // Report and set syncing to prevent double syncing.
     console.info('Beginning Initial Sync....')
+    if (global.syncing) {
+        console.warn('Already syncing, exiting sync.')
+        return
+    }
     global.syncing = true
-
-    // Sub routine to generate an appropriate API URL
-    var url = (p,t) => (`${API_URL}?fsym=BTC&tsyms=${p}&ts=${t}`)
 
     var tickers = global.TICKERS
 
@@ -35,27 +39,61 @@ module.exports = function Sync () {
 
     // Grab the last 120 chunks worth of time data.
     var times = Array.from(Array(120)).map((a,i) => i)
-    async.eachLimit(times, 1,
+    async.mapLimit(times, 1,
         (i, cb) => {
-            var time = timestamp - (i * TIME_PERIOD)
+
+            // We need the time at index, i corrected for seconds.
+            var time = ~~((timestamp - (i * TIME_PERIOD)) / 1000)
+            // This is chunked because the API doesn't like large requestss
             var tick = _.chunk(tickers, MAX_TICKERS)
-                
-            // We'll collect all the history for the current time, here.
-            var hist = []
 
-            async.eachLimit(tick, 1,
-                (ticks, cb) => {
-                    request(url(ticks, time), (err, res, body) => {
-                        console.log(body)
-                    })
-                },
-                err => {
-                    cb ()
-                }
-            )
+            // Check for cached historical data, submit it if it exists.
+            // If there is no cached historical data, fetch some from the API.
+            if (fs.existsSync(`./price_data/${time}.json`)) {
+                fs.readFile(`./price_data/${time}.json`, (err, data) => {
+                    var json = JSON.parse(data.toString())
+                    cb(null, json)
+                })
+            } else {
+                _collect(tick, time, cb)
+            }
         },
-        (err, result) => {
+        (err, res) => {
+            var final = _.flatten(res)
+            global.syncing = false
+        }
+    )
+}
 
+
+/**
+*   Collects the pairs for ticks, based on the timestamp.
+*   Also, archives it in a file located in /price_data
+*/
+function _collect (tick, time, cb) {
+
+    // Sub routine to generate an appropriate API URL
+    var url = (p,t) => (`${API_URL}?fsym=BTC&tsyms=${p}&ts=${t}`)
+
+    async.mapLimit(tick, 1,
+        (ticks, cb) => {
+            request(url(ticks, time), (err, res, body) => {
+                var resp = JSON.parse(body).BTC
+                var data = []
+
+                for(var pair in resp) {
+                    data.push([pair, resp[pair]])
+                }
+
+                cb(null, data)
+            })
+        },
+        (err, res) => {
+            var final = _.flatten(res)
+            fs.writeFile(`./price_data/${time}.json`, JSON.stringify(final), (err) => {
+                console.log(err)
+            })
+            cb (null, final)
         }
     )
 }
