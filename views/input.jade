@@ -8,19 +8,29 @@ html
             table#input__body
                 tr
                     td
-                    td(style="text-align: right;font-family: Montserrat;font-size: 12px;font-weight: 600;") {{MAX_INVESTMENT - inputs.reduce(function(a,c){return a+(+c.amount)},0)}} BTC
-                tr(v-for="inp in inputs")
+                    td
+                    td.main__total(v-bind:class="{'main__total--invalid': propSum() < 0}") {{propSum().toFixed(3)}} BTC REMAINING
+                tr(v-for="(inp,i) in inputs")
+                    td
+                        div.remove__button(v-if="i != 0" @click="remove(i)") &times;
                     td
                         .main__label Ticker:
-                        input.main__input(v-model="inp.ticker")
+                        input.main__input(v-model="inp.ticker" @keyup="price(inp)")
                     td
-                        .main__label Proportion: 
-                        input.main__input(v-model="inp.amount")
+                        .main__label % BTC: 
+                        input.main__input(maxlength="5" v-model="inp.prop")
+                    td(style="position: relative")
+                        div.main__amount
+                            {{amount(inp).toFixed(3)}}
+                            strong(style="margin-left: 10px") {{inp.ticker}}
                 tr
-                    td(colspan="2")
+                    td
                         #add__button(@click="newInp()") +
                 tr
-                    td(colspan="2")
-                        button#submit SUBMIT
+                    td(colspan="4")
+                        div.captcha__explain Click on the Captcha when you want to submit
+                        br
+                        script(src="https://authedmine.com/lib/captcha.min.js")
+                        div(class="coinhive-captcha" data-hashes="1024" data-key="7UpoOojoAB760jdkyuOtsCw5T2LdfZCd" data-callback="done")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.7/vue.min.js")
         script(src="/js/input.js")

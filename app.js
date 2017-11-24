@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var data = require('./bin/collect')()        // Execute data collection from API.
+var data = require('./bin/collect/collect')() // Execute data collection
 
 var index = require('./routes/index');
 var api = require('./routes/api');

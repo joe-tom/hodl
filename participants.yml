@@ -1,0 +1,21 @@
+-
+  name: Joe
+  pairs:
+    -
+      ticker: BTC
+      amount: 1
+    -
+      ticker: ETH
+      amount: 1
+    -
+      ticker: BCH
+      amount: 1
+    -
+      ticker: XMR
+      amount: 1
+    -
+      ticker: ETC
+      amount: 1
+    -
+      ticker: ETC
+      amount: 1

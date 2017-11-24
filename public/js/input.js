@@ -10,7 +10,9 @@ var inputs = new Vue({
         MAX_INVESTMENT,
         inputs: [{
             ticker: '',
-            amount: 0
+            amount: 0,
+            price: 0,
+            prop: 0
         }]
     },
     methods: {
@@ -20,8 +22,56 @@ var inputs = new Vue({
             }
             this.inputs.push({
                 ticker: '',
-                amount: 0
+                amount: 0,
+                price: 0,
+                prop: 0
             })
-        }
+        },
+        propSum: function () {
+            var value = (this.inputs.reduce(function (a,c) {
+                return a+(+c.prop)
+            }, 0))
+
+            value /= 100
+
+            return (MAX_INVESTMENT - value)
+        },
+        price: function (inp) {
+            var self = this
+
+            inp.amount = 0
+            var request = new XMLHttpRequest()
+            request.open('GET', '/api/price/'+inp.ticker, true)
+
+
+            // Set up the amount we bought and the price.
+            request.onload = function() {
+              if (request.status >= 200 && request.status < 400) {
+                var data = JSON.parse(request.responseText)
+
+                inp.price = data.data
+                console.log(price)
+                inp.amount = self.amount(inp)
+                self.$forceUpdate()
+              }
+            }
+
+            request.send()
+        },
+        amount: function (inp) {
+            var amount = (inp.prop / 100) / inp.price
+
+            return (!isFinite(amount) || isNaN(amount))
+                ? 0
+                : amount
+        },
+        remove: function (index) {
+            this.inputs.splice(index, 1)
+        },
     }
 })
+
+
+function done(token) {
+    console.log(token)
+}

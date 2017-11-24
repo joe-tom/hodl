@@ -20,6 +20,15 @@ body {
     width: 800px;
     text-align: left;
 }
+.main__total {
+    text-align: right;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 600;
+}
+.main__total--invalid {
+    color: #D91E18;
+}
 .main__label {
     font-family: Montserrat;
     font-size: 12px;
@@ -57,6 +66,23 @@ body {
 #add__button:active {
     box-shadow: none;
 }
+
+.remove__button {
+    font-family: Montserrat;
+    height: 30px;
+    width: 30px;
+    border-radius: 30px;
+    background-color: #000;
+    float: right;
+    line-height: 30px;
+    color: #FFF;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+    cursor: pointer;
+    box-shadow: 0px 1px 1px #000;
+}
+
 table#input__body {
     margin: auto;
     margin-top: 30px;
@@ -65,7 +91,7 @@ table#input__body {
 }
 #submit {
     padding: 15px;
-    width: 50%;
+    width: 40%;
     margin: auto;
     border-radius: 3px;
     border: 1px solid #EEE;
@@ -81,4 +107,13 @@ table#input__body {
 #submit:hover {
     background-color: #4DAF7C;
     color: #FFF;
+}
+.main__amount {
+    font-family: Montserrat;
+    font-size: 12px;
+}
+.captcha__explain {
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 800;
 }

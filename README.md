@@ -16,6 +16,6 @@ Boom, it's that easy
 
 ## FAQ
 ### Where does the data come from?
-Any realtime data comes from the CoinMarketCap API. The inital 30 day sync data once the server starts uses the CyrptoCompare Historical API.
+Any realtime data comes from the CoinMarketCap API. The inital 30 day sync data uses the CyrptoCompare Historical API.
 ### Why are you doing this?
 It's fun.
