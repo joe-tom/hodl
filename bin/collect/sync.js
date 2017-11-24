@@ -11,7 +11,7 @@ const MAX_TICKERS = 6 // It's actually 7, but this is just to be safe.
 
 
 /** This syncs the past 30 days worth of information **/
-module.exports = function Sync () {
+module.exports = function Sync (callback) {
     // Report and set syncing to prevent double syncing.
     console.info('Beginning Initial Sync....')
     if (global.syncing) {
@@ -19,6 +19,7 @@ module.exports = function Sync () {
         return
     }
     global.syncing = true
+    global.History = []
 
     var tickers = global.TICKERS
 
@@ -30,9 +31,9 @@ module.exports = function Sync () {
     var hour  = date.getUTCHours()
 
     // Calculate last chunk and grab that timestamp
-    var change = (hour % 24) % 6
+    var change = hour % 6
     var last = hour - change
-    var timestamp = Date.UTC(year, month, day, hour)
+    var timestamp = Date.UTC(year, month, day, last)
 
     console.info('Syncing at ', timestamp)
     console.info('Syncing the following tickers: ', tickers.join(','))
@@ -59,8 +60,17 @@ module.exports = function Sync () {
             }
         },
         (err, res) => {
-            var final = _.flatten(res)
+            var final = res.map(data => {
+                var map = {}
+                data.forEach(arr => {
+                    map[arr[0]] = arr[1]
+                })
+                return map
+            })
+            
+            global.History = final
             global.syncing = false
+            callback()
         }
     )
 }
@@ -82,7 +92,7 @@ function _collect (tick, time, cb) {
                 var data = []
 
                 for(var pair in resp) {
-                    data.push([pair, resp[pair]])
+                    data.push([pair, 1 / resp[pair]])
                 }
 
                 cb(null, data)

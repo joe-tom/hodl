@@ -19,8 +19,8 @@ router.get('/price/:symbol', (req, res, next) => {
 
 })
 
-router.get('/participants', (req, res, next) => {
-    res.send(global.PARTICIPANTS)
+router.get('/ledger', (req, res, next) => {
+    res.send(global.History)
 })
 
 router.post('/post', (req, res, next) => {

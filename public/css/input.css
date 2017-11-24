@@ -1,9 +1,17 @@
 
-@import url('https://fonts.googleapis.com/css?family=Vollkorn+SC|Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Vollkorn+SC|Montserrat:100,400');
 
 body {
     text-align: center;
+    overflow-y: scroll;
 }
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+
+/** Styling related to the main stuff. */
 #main__header {
     font-family: Vollkorn SC;
     font-size: 40px;
@@ -21,7 +29,7 @@ body {
     text-align: left;
 }
 .main__total {
-    text-align: right;
+    float: right;
     font-family: Montserrat;
     font-size: 12px;
     font-weight: 600;
@@ -119,4 +127,11 @@ table#input__body {
     font-family: Montserrat;
     font-size: 12px;
     font-weight: 800;
+}
+#name {
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid #DDD;
+    margin-bottom: 50px;
+    margin-top: 20px;
 }

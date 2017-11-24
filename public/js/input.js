@@ -14,7 +14,8 @@ var inputs = new Vue({
             price: 0,
             prop: 0,
             bad: false
-        }]
+        }],
+        name: ""
     },
     methods: {
         newInp: function () {

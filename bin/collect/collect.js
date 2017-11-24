@@ -5,18 +5,21 @@ const yaml = require('yamljs')
 const tick = require('./tick')
 const sync = require('./sync')
 const grab = require('./grab')
-
+const calc = require('./calc')
 
 module.exports = () => {
     global.TICKERS = []
     global.PRICES = {}
+
+    global.People = []
+    global.Ledger = []
     global.History = []
-    
+
     global.syncing = false
 
     // Load up the tickers and then historical data
     tick()
-    sync()
+    sync(calc)
     grab()
 
     // Fetch this every 6 hours.
@@ -29,8 +32,9 @@ module.exports = () => {
         ],
         utc: true
     }, (ot) => {
-        // Grab the latest history, and we're done
+        // Grab the latest history, recalculate and we're done
         grab()
+        calc()
         ot.done()
     })
 }

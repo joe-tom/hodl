@@ -8,7 +8,7 @@ module.exports = function Tick () {
     var tMap = {}
 
     // This is for API access.
-    global.PEOPLE = people
+    global.People = people
 
     // Go through every pair and add it to the map
     for (var i = people.length; i--;) {
