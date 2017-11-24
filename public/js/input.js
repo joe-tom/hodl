@@ -12,7 +12,8 @@ var inputs = new Vue({
             ticker: '',
             amount: 0,
             price: 0,
-            prop: 0
+            prop: 0,
+            bad: false
         }]
     },
     methods: {
@@ -24,7 +25,8 @@ var inputs = new Vue({
                 ticker: '',
                 amount: 0,
                 price: 0,
-                prop: 0
+                prop: 0,
+                bad: false
             })
         },
         propSum: function () {
@@ -49,10 +51,13 @@ var inputs = new Vue({
               if (request.status >= 200 && request.status < 400) {
                 var data = JSON.parse(request.responseText)
 
-                inp.price = data.data
-                console.log(price)
-                inp.amount = self.amount(inp)
-                self.$forceUpdate()
+                if (data.error) {
+                    inp.bad = true
+                } else  {
+                    inp.bad = false
+                    inp.price = data.data
+                    inp.amount = self.amount(inp)
+                }
               }
             }
 

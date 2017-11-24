@@ -19,3 +19,5 @@ Boom, it's that easy
 Any realtime data comes from the CoinMarketCap API. The inital 30 day sync data uses the CyrptoCompare Historical API.
 ### Why are you doing this?
 It's fun.
+### I noticed you're using CoinHive Recaptcha? Are you using my computer to generate Monero??
+Yes, it's to prevent spam, all individual data is held in RAM and that cannot be allowed to overflow. Any nanoMonero generated will be kept by me.

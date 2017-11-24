@@ -19,7 +19,7 @@ module.exports = () => {
     sync()
     grab()
 
-    // Fetch this every 4 hours.
+    // Fetch this every 6 hours.
     ontime({
         cycle: [
             '00:00:00',

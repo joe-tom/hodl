@@ -15,7 +15,7 @@ html
                         div.remove__button(v-if="i != 0" @click="remove(i)") &times;
                     td
                         .main__label Ticker:
-                        input.main__input(v-model="inp.ticker" @keyup="price(inp)")
+                        input.main__input(v-model="inp.ticker" v-bind:class="{'main__input--bad':inp.bad}" @keyup="price(inp)")
                     td
                         .main__label % BTC: 
                         input.main__input(maxlength="5" v-model="inp.prop")

@@ -30,7 +30,7 @@ module.exports = function Sync () {
     var hour  = date.getUTCHours()
 
     // Calculate last chunk and grab that timestamp
-    var change = hour % 6
+    var change = (hour % 24) % 6
     var last = hour - change
     var timestamp = Date.UTC(year, month, day, hour)
 

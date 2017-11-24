@@ -49,6 +49,9 @@ body {
     float: right;
     font-family: Montserrat;
 }
+.main__input--bad {
+    border-color: #F03434;
+}
 #add__button {
     height: 50px;
     width: 50px;
