@@ -20,6 +20,7 @@ module.exports = function Sync (callback) {
     }
     global.syncing = true
     global.History = []
+    global.Times = []
 
     var tickers = global.TICKERS
 
@@ -45,6 +46,8 @@ module.exports = function Sync (callback) {
 
             // We need the time at index, i corrected for seconds.
             var time = ~~((timestamp - (i * TIME_PERIOD)) / 1000)
+            global.Times.push(time)
+
             // This is chunked because the API doesn't like large requestss
             var tick = _.chunk(tickers, MAX_TICKERS)
 
@@ -65,6 +68,10 @@ module.exports = function Sync (callback) {
                 data.forEach(arr => {
                     map[arr[0]] = arr[1]
                 })
+
+                // If you delete this line, all values will be NaN
+                map.BTC = 1
+
                 return map
             })
             

@@ -20,7 +20,10 @@ router.get('/price/:symbol', (req, res, next) => {
 })
 
 router.get('/ledger', (req, res, next) => {
-    res.send(global.History)
+    res.send({
+        time: global.Times,
+        people: global.Ledger
+    })
 })
 
 router.post('/post', (req, res, next) => {

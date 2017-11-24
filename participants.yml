@@ -19,3 +19,9 @@
     -
       ticker: ETC
       amount: 1
+-
+  name: Blo
+  pairs:
+    -
+      ticker: BCH
+      amount: 1

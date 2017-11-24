@@ -13,9 +13,9 @@ module.exports = function Calc () {
 
         for (var h = 0, hh = global.History.length; h < hh; h++) {
             var amount = 0
-            for (var n = peep.pairs; n--;) {
+            for (var n = peep.pairs.length; n--;) {
                 var pair = peep.pairs[n]
-                amount += (history[h][[pair].ticker] * pair.amount)
+                amount += (history[h][pair.ticker] * pair.amount)
             }
             amounts.push(amount)
         }
